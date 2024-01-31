@@ -38,9 +38,10 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_AV_A))
                         {
-                            player->CompleteQuest(QUEST_AV_A);
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AV_A))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_AV_A);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
@@ -49,9 +50,10 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_AV_H))
                         {
-                            player->CompleteQuest(QUEST_AV_H);
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AV_H))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_AV_H);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
@@ -62,9 +64,10 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_WSG_A))
                         {
-                            player->CompleteQuest(QUEST_WSG_A);
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_WSG_A))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_WSG_A);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
@@ -73,9 +76,10 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_WSG_H))
                         {
-                            player->CompleteQuest(QUEST_WSG_H);
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_WSG_H))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_WSG_H);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
@@ -86,9 +90,10 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_AB_A))
                         {
-                            player->CompleteQuest(QUEST_AB_A);
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AB_A))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_AB_A);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
@@ -97,9 +102,10 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_AB_H))
                         {
-                            player->CompleteQuest(QUEST_AB_H);
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AB_H))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_AB_H);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
@@ -110,9 +116,11 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_EOS_A))
                         {
-                            player->CompleteQuest(QUEST_EOS_A);
+
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_EOS_A))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_EOS_A);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
@@ -121,9 +129,10 @@ public:
                     {
                         if (player->CanCompleteQuest(QUEST_EOS_H))
                         {
-                            player->CompleteQuest(QUEST_EOS_H);
                             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_EOS_H))
                             {
+                                player->AddQuest(quest, nullptr);
+                                player->CompleteQuest(QUEST_EOS_H);
                                 player->RewardQuest(quest, 0, nullptr, true, true);
                             }
                         }
