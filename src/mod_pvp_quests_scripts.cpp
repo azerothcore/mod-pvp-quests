@@ -9,17 +9,20 @@
 
 enum QuestIds
 {
-    QUEST_AB_A  = 11335,
-    QUEST_AB_H  = 11339,
+    QUEST_AB_A = 11335,
+    QUEST_AB_H = 11339,
 
-    QUEST_AV_A  = 11336,
-    QUEST_AV_H  = 11340,
+    QUEST_AV_A = 11336,
+    QUEST_AV_H = 11340,
 
     QUEST_EOS_A = 11337,
     QUEST_EOS_H = 11341,
 
     QUEST_WSG_A = 11338,
-    QUEST_WSG_H = 11342
+    QUEST_WSG_H = 11342,
+
+    QUEST_MARKER_WIN = 50010,
+    QUEST_MARKER_DEFEAT = 50011
 };
 
 class BgQuestRewardScript : public BGScript
@@ -29,117 +32,45 @@ public:
 
     void OnBattlegroundEndReward(Battleground* bg, Player* player, TeamId winnerTeamId) override
     {
+        if (!sConfigMgr->GetOption<bool>("ModPvPQuests.Enable", true))
+        {
+            return;
+        }
+
         if (winnerTeamId == player->GetBgTeamId())
         {
-            switch (bg->GetMapId())
+            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_MARKER_WIN))
             {
-                case 30:  // AV
-                    if (player->GetTeamId(true) == TEAM_ALLIANCE)
-                    {
-                        if (player->CanCompleteQuest(QUEST_AV_A))
-                        {
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AV_A))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_AV_A);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (player->CanCompleteQuest(QUEST_AV_H))
-                        {
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AV_H))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_AV_H);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
-                    }
-                    break;
-                case 489: // WSG
-                    if (player->GetTeamId(true) == TEAM_ALLIANCE)
-                    {
-                        if (player->CanCompleteQuest(QUEST_WSG_A))
-                        {
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_WSG_A))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_WSG_A);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (player->CanCompleteQuest(QUEST_WSG_H))
-                        {
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_WSG_H))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_WSG_H);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
-                    }
-                    break;
-                case 529: // AB
-                    if (player->GetTeamId(true) == TEAM_ALLIANCE)
-                    {
-                        if (player->CanCompleteQuest(QUEST_AB_A))
-                        {
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AB_A))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_AB_A);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (player->CanCompleteQuest(QUEST_AB_H))
-                        {
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_AB_H))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_AB_H);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
-                    }
-                    break;
-                case 566: // EOTS
-                    if (player->GetTeamId(true) == TEAM_ALLIANCE)
-                    {
-                        if (player->CanCompleteQuest(QUEST_EOS_A))
-                        {
+                if (player->CanTakeQuest(quest, false))
+                {
+                    player->AddQuest(quest, nullptr);
+                    player->CompleteQuest(QUEST_MARKER_WIN);
+                    player->RewardQuest(quest, 0, nullptr, true, true);
 
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_EOS_A))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_EOS_A);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
-                    }
-                    else
+                    if (int32 ap = sConfigMgr->GetOption<int>("ModPvPQuests.WinAP", 10))
                     {
-                        if (player->CanCompleteQuest(QUEST_EOS_H))
-                        {
-                            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_EOS_H))
-                            {
-                                player->AddQuest(quest, nullptr);
-                                player->CompleteQuest(QUEST_EOS_H);
-                                player->RewardQuest(quest, 0, nullptr, true, true);
-                            }
-                        }
+                        player->ModifyArenaPoints(ap);
                     }
-                    break;
+                }
             }
         }
+        else
+        {
+            if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_MARKER_DEFEAT))
+            {
+                if (int32 ap = sConfigMgr->GetOption<int>("ModPvPQuests.LossAP", 0))
+                {
+                    if (player->CanTakeQuest(quest, false))
+                    {
+                        player->AddQuest(quest, nullptr);
+                        player->CompleteQuest(QUEST_MARKER_DEFEAT);
+                        player->RewardQuest(quest, 0, nullptr, true, true);
+                        player->ModifyArenaPoints(ap);
+                    }
+                }
+            }
+        }
+
     }
 };
 
