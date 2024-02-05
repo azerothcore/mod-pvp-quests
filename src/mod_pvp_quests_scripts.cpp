@@ -30,7 +30,7 @@ class BgQuestRewardScript : public BGScript
 public:
     BgQuestRewardScript() : BGScript("mod_bg_quest_reward_script") { }
 
-    void OnBattlegroundEndReward(Battleground* bg, Player* player, TeamId winnerTeamId) override
+    void OnBattlegroundEndReward(Battleground* /*bg*/, Player* player, TeamId winnerTeamId) override
     {
         if (!sConfigMgr->GetOption<bool>("ModPvPQuests.Enable", true))
         {
