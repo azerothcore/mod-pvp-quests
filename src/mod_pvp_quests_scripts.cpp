@@ -37,6 +37,11 @@ public:
             return;
         }
 
+        if (player->GetMap()->IsBattleArena())
+        {
+            return;
+        }
+
         if (winnerTeamId == player->GetBgTeamId())
         {
             if (Quest const* quest = sObjectMgr->GetQuestTemplate(QUEST_MARKER_WIN))
