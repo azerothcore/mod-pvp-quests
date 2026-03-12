@@ -125,6 +125,9 @@ public:
             if (player->IsSpectator())
                 return;
 
+            if (!bg->isRated())
+                return; // Skirmish (unrated arena match)
+
             if (player->HasQuest(QUEST_ARENA_DAILY))
                 player->KilledMonsterCredit(CREATURE_ARENA_COMPLETED);
 
