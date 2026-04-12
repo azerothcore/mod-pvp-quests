@@ -128,7 +128,7 @@ public:
             if (!bg->isRated())
                 return; // Skirmish (unrated arena match)
 
-            bool matchValidity = bg->GetStatus() == STATUS_IN_PROGRESS && bg->GetStartTime() >= bg->GetStartDelayTime() + 15000; // Treated in upstream AC as `bValidArena`
+            bool matchValidity = bg->GetStatus() == STATUS_IN_PROGRESS && bg->GetStartTime() >= uint32(bg->GetStartDelayTime()) + 15000; // Treated in upstream AC as `bValidArena`
 
             if (!matchValidity)
                 return;
