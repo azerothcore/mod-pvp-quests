@@ -128,10 +128,11 @@ public:
             if (!bg->isRated())
                 return; // Skirmish (unrated arena match)
 
-            bool matchValidity = bg->GetStatus() == STATUS_IN_PROGRESS && bg->GetStartTime() >= uint32(bg->GetStartDelayTime()) + 15000; // Treated in upstream AC as `bValidArena`
+            if (bg->GetStartDelayTime())
+                return; // Match hasn't started yet
 
-            if (!matchValidity)
-                return;
+            if (bg->GetStartTime() < 75 * IN_MILLISECONDS)
+                return; // 15 seconds haven't passed after match start (starts at 60s)
 
             if (player->HasQuest(QUEST_ARENA_DAILY))
                 player->KilledMonsterCredit(CREATURE_ARENA_COMPLETED);
